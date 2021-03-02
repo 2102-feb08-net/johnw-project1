@@ -1,0 +1,15 @@
+C:\revature\johnw-project1\BookStore\BookStore.Tests\obj\Debug\netcoreapp3.1\BookStore.Tests.csprojAssemblyReference.cache
+C:\revature\johnw-project1\BookStore\BookStore.Tests\obj\Debug\netcoreapp3.1\BookStore.Tests.AssemblyInfoInputs.cache
+C:\revature\johnw-project1\BookStore\BookStore.Tests\obj\Debug\netcoreapp3.1\BookStore.Tests.AssemblyInfo.cs
+C:\revature\johnw-project1\BookStore\BookStore.Tests\obj\Debug\netcoreapp3.1\BookStore.Tests.csproj.CoreCompileInputs.cache
+C:\revature\johnw-project1\BookStore\BookStore.Tests\bin\Debug\netcoreapp3.1\BookStore.Tests.deps.json
+C:\revature\johnw-project1\BookStore\BookStore.Tests\bin\Debug\netcoreapp3.1\BookStore.Tests.runtimeconfig.json
+C:\revature\johnw-project1\BookStore\BookStore.Tests\bin\Debug\netcoreapp3.1\BookStore.Tests.runtimeconfig.dev.json
+C:\revature\johnw-project1\BookStore\BookStore.Tests\bin\Debug\netcoreapp3.1\BookStore.Tests.dll
+C:\revature\johnw-project1\BookStore\BookStore.Tests\bin\Debug\netcoreapp3.1\BookStore.Tests.pdb
+C:\revature\johnw-project1\BookStore\BookStore.Tests\bin\Debug\netcoreapp3.1\BookStore.Domain.dll
+C:\revature\johnw-project1\BookStore\BookStore.Tests\bin\Debug\netcoreapp3.1\BookStore.Domain.pdb
+C:\revature\johnw-project1\BookStore\BookStore.Tests\obj\Debug\netcoreapp3.1\BookStore.Tests.csproj.CopyComplete
+C:\revature\johnw-project1\BookStore\BookStore.Tests\obj\Debug\netcoreapp3.1\BookStore.Tests.dll
+C:\revature\johnw-project1\BookStore\BookStore.Tests\obj\Debug\netcoreapp3.1\BookStore.Tests.pdb
+C:\revature\johnw-project1\BookStore\BookStore.Tests\obj\Debug\netcoreapp3.1\BookStore.Tests.genruntimeconfig.cache

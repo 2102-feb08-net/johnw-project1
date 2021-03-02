@@ -1,0 +1,12 @@
+C:\revature\johnw-project1\BookStore\BookStore.Services\obj\Debug\netcoreapp3.1\BookStore.Services.csprojAssemblyReference.cache
+C:\revature\johnw-project1\BookStore\BookStore.Services\obj\Debug\netcoreapp3.1\BookStore.Services.AssemblyInfoInputs.cache
+C:\revature\johnw-project1\BookStore\BookStore.Services\obj\Debug\netcoreapp3.1\BookStore.Services.AssemblyInfo.cs
+C:\revature\johnw-project1\BookStore\BookStore.Services\obj\Debug\netcoreapp3.1\BookStore.Services.csproj.CoreCompileInputs.cache
+C:\revature\johnw-project1\BookStore\BookStore.Services\bin\Debug\netcoreapp3.1\BookStore.Services.deps.json
+C:\revature\johnw-project1\BookStore\BookStore.Services\bin\Debug\netcoreapp3.1\BookStore.Services.dll
+C:\revature\johnw-project1\BookStore\BookStore.Services\bin\Debug\netcoreapp3.1\BookStore.Services.pdb
+C:\revature\johnw-project1\BookStore\BookStore.Services\bin\Debug\netcoreapp3.1\BookStore.Domain.dll
+C:\revature\johnw-project1\BookStore\BookStore.Services\bin\Debug\netcoreapp3.1\BookStore.Domain.pdb
+C:\revature\johnw-project1\BookStore\BookStore.Services\obj\Debug\netcoreapp3.1\BookStore.Services.csproj.CopyComplete
+C:\revature\johnw-project1\BookStore\BookStore.Services\obj\Debug\netcoreapp3.1\BookStore.Services.dll
+C:\revature\johnw-project1\BookStore\BookStore.Services\obj\Debug\netcoreapp3.1\BookStore.Services.pdb
