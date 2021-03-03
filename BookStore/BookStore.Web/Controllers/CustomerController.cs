@@ -14,9 +14,9 @@ namespace BookStore.Web.Controllers
     {
         private readonly ICustomerRepository _repo;
 
-        public CustomerController()
+        public CustomerController(ICustomerRepository customerRepository)
         {
-            _repo = new CustomerRepository();
+            _repo = customerRepository;
         }
 
         [HttpGet("api/customers")]

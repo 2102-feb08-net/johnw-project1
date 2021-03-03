@@ -11,22 +11,11 @@ namespace BookStore.DataAccess
 {
     public class OrderRepository : IOrderRepository
     {
-        /// <summary>
-        /// Generates the context for accessing the database based on options that are given.
-        /// </summary>
-        /// <param name="logStream"></param>
-        /// <returns> bookstoredbContext _context </returns>
-        private bookstoredbContext GenerateDBContext(StreamWriter logStream)
+        private readonly bookstoredbContext _context;
+        public OrderRepository(bookstoredbContext context)
         {
-            string connString = File.ReadAllText("C:/revature/bkdb.txt");
-            DbContextOptions<bookstoredbContext> options = new DbContextOptionsBuilder<bookstoredbContext>()
-                .UseSqlServer(connString)
-                .LogTo(logStream.WriteLine, minimumLevel: LogLevel.Information)
-                .Options;
-
-            return new bookstoredbContext(options);
+            _context = context;
         }
-
         // CRUD Orders
 
         /// <summary>
@@ -35,9 +24,6 @@ namespace BookStore.DataAccess
         /// <returns> List<Order> toReturn </returns>
         public List<Domain.Order> GetAllOrders()
         {
-            using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
-            using var _context = GenerateDBContext(logStream);
-
             var dbOrders = _context.Set<Order>().ToList();
             List<Domain.Order> toReturn = new List<Domain.Order>();
 
@@ -66,9 +52,6 @@ namespace BookStore.DataAccess
         /// <returns> Order ord </returns>
         public Domain.Order GetOrderByID(int id)
         {
-            using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
-            using var _context = GenerateDBContext(logStream);
-
             var o = _context.Set<Order>().Find(id);
             var ord = new Domain.Order(o.Id, o.CustomerId, o.LocationId) { Time = (DateTimeOffset)o.Time, Total = (decimal)o.TotalPrice };
 
@@ -91,9 +74,6 @@ namespace BookStore.DataAccess
         /// <returns> List<Order> toReturn </returns>
         public List<Domain.Order> GetOrdersByCustomerID(int customerID)
         {
-            using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
-            using var _context = GenerateDBContext(logStream);
-
             var dbOrders = _context.Set<Order>().Where(i => i.CustomerId == customerID).ToList();
             List<Domain.Order> toReturn = new List<Domain.Order>();
 
@@ -120,9 +100,6 @@ namespace BookStore.DataAccess
         /// <returns> List<Order> toReturn </returns>
         public List<Domain.Order> GetOrdersByLocationID(int locationID)
         {
-            using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
-            using var _context = GenerateDBContext(logStream);
-
             var dbOrders = _context.Set<Order>().Where(i => i.LocationId == locationID).ToList();
             List<Domain.Order> toReturn = new List<Domain.Order>();
 
@@ -148,9 +125,6 @@ namespace BookStore.DataAccess
         /// <param name="o"></param>
         public void AddOrder(Domain.Order o)
         {
-            using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
-            using var _context = GenerateDBContext(logStream);
-
             Order entity = new Order() { CustomerId = o.CustomerID, LocationId = o.LocationID, Time = o.Time.UtcDateTime, TotalPrice = o.Total };
             _context.Set<Order>().Add(entity);
             _context.SaveChanges();

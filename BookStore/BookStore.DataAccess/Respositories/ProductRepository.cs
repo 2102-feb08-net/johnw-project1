@@ -11,20 +11,10 @@ namespace BookStore.DataAccess
 {
     public class ProductRepository : IProductRepository
     {
-        /// <summary>
-        /// Generates the context for accessing the database based on options that are given.
-        /// </summary>
-        /// <param name="logStream"></param>
-        /// <returns> bookstoredbContext _context </returns>
-        private bookstoredbContext GenerateDBContext(StreamWriter logStream)
+        private readonly bookstoredbContext _context;
+        public ProductRepository(bookstoredbContext context)
         {
-            string connString = File.ReadAllText("C:/revature/bkdb.txt");
-            DbContextOptions<bookstoredbContext> options = new DbContextOptionsBuilder<bookstoredbContext>()
-                .UseSqlServer(connString)
-                .LogTo(logStream.WriteLine, minimumLevel: LogLevel.Information)
-                .Options;
-
-            return new bookstoredbContext(options);
+            _context = context;
         }
 
         // CRUD Product
@@ -35,9 +25,6 @@ namespace BookStore.DataAccess
         /// <returns> List<Product> list </returns>
         public List<Domain.Product> GetAllProducts()
         {
-            using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
-            using var _context = GenerateDBContext(logStream);
-
             var x = _context.Set<Product>().AsEnumerable();
             List<Domain.Product> list = new List<Domain.Product>();
 
@@ -57,9 +44,6 @@ namespace BookStore.DataAccess
         /// <returns> Product x </returns>
         public Domain.Product GetProductByID(int id)
         {
-            using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
-            using var _context = GenerateDBContext(logStream);
-
             var c = _context.Set<Product>().Find(id);
             var x = new Domain.Product(c.Name, (decimal)c.Price);
 
@@ -73,9 +57,6 @@ namespace BookStore.DataAccess
         /// <returns> List<Product> toReturn </returns>
         public List<Domain.Product> GetProductByName(string name)
         {
-            using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
-            using var _context = GenerateDBContext(logStream);
-
             var products = _context.Set<Product>().Where(x => name == x.Name).ToList();
             List<Domain.Product> toReturn = new List<Domain.Product>();
 

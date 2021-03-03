@@ -14,9 +14,9 @@ namespace BookStore.Web.Controllers
     {
         private readonly IOrderRepository _repo;
 
-        public OrderController()
+        public OrderController(IOrderRepository orderRepository)
         {
-            _repo = new OrderRepository();
+            _repo = orderRepository;
         }
 
         [HttpGet("api/orders")]

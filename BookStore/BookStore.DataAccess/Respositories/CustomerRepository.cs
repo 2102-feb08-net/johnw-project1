@@ -11,20 +11,10 @@ namespace BookStore.DataAccess
 {
     public class CustomerRepository : ICustomerRepository
     {
-        /// <summary>
-        /// Generates the context for accessing the database based on options that are given.
-        /// </summary>
-        /// <param name="logStream"></param>
-        /// <returns> bookstoredbContext _context </returns>
-        private bookstoredbContext GenerateDBContext(StreamWriter logStream)
+        private readonly bookstoredbContext _context;
+        public CustomerRepository(bookstoredbContext context)
         {
-            string connString = File.ReadAllText("C:/revature/bkdb.txt");
-            DbContextOptions<bookstoredbContext> options = new DbContextOptionsBuilder<bookstoredbContext>()
-                .UseSqlServer(connString)
-                .LogTo(logStream.WriteLine, minimumLevel: LogLevel.Information)
-                .Options;
-
-            return new bookstoredbContext(options);
+            _context = context;
         }
 
         // CRUD Customer
@@ -35,9 +25,6 @@ namespace BookStore.DataAccess
         /// <returns> List<Customer> list </returns>
         public List<Domain.Customer> GetAllCustomers()
         {
-            using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
-            using var _context = GenerateDBContext(logStream);
-
             var x = _context.Set<Customer>().AsEnumerable();
             List<Domain.Customer> list = new List<Domain.Customer>();
 
@@ -57,9 +44,6 @@ namespace BookStore.DataAccess
         /// <returns> Customer x </returns>
         public Domain.Customer GetCustomerByID(int id)
         {
-            using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
-            using var _context = GenerateDBContext(logStream);
-
             var c = _context.Set<Customer>().Find(id);
             var x = new Domain.Customer(c.FirstName, c.LastName) { ID = c.Id, FirstName = c.FirstName, LastName = c.LastName, DefaultLocationID = (int)c.DefaultLocationId };
 
@@ -74,9 +58,6 @@ namespace BookStore.DataAccess
         /// <returns> List<Customer> toReturn </returns>
         public List<Domain.Customer> GetCustomerByName(string first, string last)
         {
-            using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
-            using var _context = GenerateDBContext(logStream);
-
             var customers = _context.Set<Customer>().Where(x => x.FirstName == first && x.LastName == last).ToList();
             List<Domain.Customer> toReturn = new List<Domain.Customer>();
 
@@ -95,9 +76,6 @@ namespace BookStore.DataAccess
         /// <param name="c"></param>
         public void AddCustomer(Domain.Customer c)
         {
-            using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
-            using var _context = GenerateDBContext(logStream);
-
             Customer entity = new Customer() { FirstName = c.FirstName, LastName = c.LastName, DefaultLocationId = c.DefaultLocationID };
             _context.Set<Customer>().Add(entity);
             _context.SaveChanges();
@@ -109,9 +87,6 @@ namespace BookStore.DataAccess
         /// <param name="c"></param>
         public void UpdateCustomer(Domain.Customer c)
         {
-            using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
-            using var _context = GenerateDBContext(logStream);
-
             var entity = _context.Customers.SingleOrDefault(x => x.Id == c.ID);
             if (entity != null)
             {
@@ -129,9 +104,6 @@ namespace BookStore.DataAccess
         /// <param name="c"></param>
         public void DeleteCustomer(Domain.Customer c)
         {
-            using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
-            using var _context = GenerateDBContext(logStream);
-
             var entity = _context.Customers.SingleOrDefault(x => x.Id == c.ID);
             if (entity != null)
             {

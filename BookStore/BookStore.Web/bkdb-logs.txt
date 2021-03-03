@@ -1,22 +1,6 @@
-info: 3/3/2021 09:29:30.107 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+info: 3/3/2021 10:13:52.565 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
       Entity Framework Core 5.0.3 initialized 'bookstoredbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
-info: 3/3/2021 09:29:30.151 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
-      Executed DbCommand (44ms) [Parameters=[@__customerID_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
-      SELECT [o].[ID], [o].[CustomerID], [o].[LocationID], [o].[Time], [o].[TotalPrice]
-      FROM [bkdb].[Orders] AS [o]
-      WHERE [o].[CustomerID] = @__customerID_0
-info: 3/3/2021 09:29:30.196 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
-      Executed DbCommand (44ms) [Parameters=[@__o_Id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
-      SELECT [o].[OrderID], [o].[ProductID], [o].[Amount]
-      FROM [bkdb].[OrderLine] AS [o]
-      WHERE [o].[OrderID] = @__o_Id_0
-info: 3/3/2021 09:29:30.240 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
-      Executed DbCommand (44ms) [Parameters=[@__i_ProductId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
-      SELECT TOP(1) [p].[ID], [p].[Name], [p].[Price]
-      FROM [bkdb].[Product] AS [p]
-      WHERE [p].[ID] = @__i_ProductId_0
-info: 3/3/2021 09:29:30.285 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
-      Executed DbCommand (44ms) [Parameters=[@__i_ProductId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
-      SELECT TOP(1) [p].[ID], [p].[Name], [p].[Price]
-      FROM [bkdb].[Product] AS [p]
-      WHERE [p].[ID] = @__i_ProductId_0
+info: 3/3/2021 10:13:53.404 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (88ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [c].[ID], [c].[DefaultLocationID], [c].[FirstName], [c].[LastName]
+      FROM [bkdb].[Customer] AS [c]

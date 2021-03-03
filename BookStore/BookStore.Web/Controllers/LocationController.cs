@@ -14,29 +14,15 @@ namespace BookStore.Web.Controllers
     {
         private readonly ILocationRepository _repo;
 
-        public LocationController()
+        public LocationController(ILocationRepository locationRepository)
         {
-            _repo = new LocationRepository();
+            _repo = locationRepository;
         }
 
         [HttpGet("api/locations")]
         public IEnumerable<Domain.Location> GetAllLocations()
         {
-            var locations = _repo.GetAllLocations();
-            //List<Models.Location> toReturn = new List<Models.Location>();
-
-            //foreach(var loc in locations)
-            //{
-            //    var l = new Models.Location(loc.ID, loc.Name);
-            //    foreach(var kv in loc.Inventory)
-            //    {
-            //        l.Inventory.Add(kv.Key, kv.Value);
-            //    }
-            //    toReturn.Add(l);
-            //}
-
-            //return toReturn;
-            return locations;
+            return _repo.GetAllLocations();
         }
 
         [HttpGet("api/locations/{id?}")]

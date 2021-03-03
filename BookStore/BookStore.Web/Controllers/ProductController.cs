@@ -14,9 +14,9 @@ namespace BookStore.Web.Controllers
     {
         private readonly IProductRepository _repo;
 
-        public ProductController()
+        public ProductController(IProductRepository productRepository)
         {
-            _repo = new ProductRepository();
+            _repo = productRepository;
         }
 
         [HttpGet("api/products")]

@@ -11,20 +11,10 @@ namespace BookStore.DataAccess
 {
     public class LocationRepository : ILocationRepository
     {
-        /// <summary>
-        /// Generates the context for accessing the database based on options that are given.
-        /// </summary>
-        /// <param name="logStream"></param>
-        /// <returns> bookstoredbContext _context </returns>
-        private bookstoredbContext GenerateDBContext(StreamWriter logStream)
+        private readonly bookstoredbContext _context;
+        public LocationRepository(bookstoredbContext context)
         {
-            string connString = File.ReadAllText("C:/revature/bkdb.txt");
-            DbContextOptions<bookstoredbContext> options = new DbContextOptionsBuilder<bookstoredbContext>()
-                .UseSqlServer(connString)
-                .LogTo(logStream.WriteLine, minimumLevel: LogLevel.Information)
-                .Options;
-
-            return new bookstoredbContext(options);
+            _context = context;
         }
 
         // CRUD Location
@@ -35,9 +25,6 @@ namespace BookStore.DataAccess
         /// <returns> List<Location> toReturn </returns>
         public List<Domain.Location> GetAllLocations()
         {
-            using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
-            using var _context = GenerateDBContext(logStream);
-
             var dbLocations = _context.Set<Location>().ToList();
             List<Domain.Location> toReturn = new List<Domain.Location>();
 
@@ -64,9 +51,6 @@ namespace BookStore.DataAccess
         /// <returns> Location loc </returns>
         public Domain.Location GetLocationByID(int id)
         {
-            using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
-            using var _context = GenerateDBContext(logStream);
-
             var l = _context.Set<Location>().Find(id);
             Domain.Location loc = new Domain.Location(id) { Name = l.Name };
 
@@ -88,9 +72,6 @@ namespace BookStore.DataAccess
         /// <returns> Location loc </returns>
         public Domain.Location GetLocationByName(string name)
         {
-            using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
-            using var _context = GenerateDBContext(logStream);
-
             var l = _context.Set<Location>().Where(x => x.Name.ToLower() == name.ToLower()).FirstOrDefault();
             Domain.Location loc = new Domain.Location(l.Id) { Name = l.Name };
 
@@ -120,9 +101,6 @@ namespace BookStore.DataAccess
         /// <param name="l"></param>
         public void UpdateLocation(Domain.Location l)
         {
-            using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
-            using var _context = GenerateDBContext(logStream);
-
             var entity = _context.Locations.SingleOrDefault(x => x.Id == l.ID);
             if (entity != null)
             {
