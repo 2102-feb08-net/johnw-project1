@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BookStore.DataAccess
 {
-    class ProductRepository : IProductRepository
+    public class ProductRepository : IProductRepository
     {
         /// <summary>
         /// Generates the context for accessing the database based on options that are given.

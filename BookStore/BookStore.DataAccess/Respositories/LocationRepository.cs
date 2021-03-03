@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BookStore.DataAccess
 {
-    class LocationRepository : ILocationRepository
+    public class LocationRepository : ILocationRepository
     {
         /// <summary>
         /// Generates the context for accessing the database based on options that are given.
@@ -129,9 +129,9 @@ namespace BookStore.DataAccess
                 entity.Name = l.Name;
                 _context.Entry(entity).State = EntityState.Modified;
 
-                foreach (KeyValuePair<Domain.Product, int> kv in l.Inventory)
+                foreach (KeyValuePair<int, int> kv in l.Inventory)
                 {
-                    var i = _context.Find<Inventory>(l.ID, kv.Key.ID);
+                    var i = _context.Find<Inventory>(l.ID, kv.Key);
                     if (i.Amount != kv.Value)
                     {
                         i.Amount = kv.Value;

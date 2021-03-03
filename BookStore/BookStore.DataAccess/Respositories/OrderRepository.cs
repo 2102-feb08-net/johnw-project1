@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BookStore.DataAccess
 {
-    class OrderRepository : IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         /// <summary>
         /// Generates the context for accessing the database based on options that are given.
@@ -43,12 +43,14 @@ namespace BookStore.DataAccess
 
             foreach (var o in dbOrders)
             {
-                var n = new Domain.Order(o.Id, o.CustomerId, o.LocationId) { Time = (DateTimeOffset)o.Time };
+                var n = new Domain.Order(o.Id, o.CustomerId, o.LocationId) { Time = (DateTimeOffset)o.Time, Total = (decimal)o.TotalPrice };
+
                 var lines = _context.Set<OrderLine>().Where(i => i.OrderId == o.Id).ToList();
                 foreach (var i in lines)
                 {
                     var dbProduct = _context.Set<Product>().Where(p => p.Id == i.ProductId).FirstOrDefault();
-                    var domProduct = new Domain.Product(dbProduct.Name, (decimal)dbProduct.Price);
+                    var domProduct = new Domain.Product(dbProduct.Id, dbProduct.Name, (decimal)dbProduct.Price);
+                    
                     n.SetItemAmount(domProduct, i.Amount);
                 }
                 toReturn.Add(n);
@@ -68,13 +70,14 @@ namespace BookStore.DataAccess
             using var _context = GenerateDBContext(logStream);
 
             var o = _context.Set<Order>().Find(id);
-            var ord = new Domain.Order(o.Id, o.CustomerId, o.LocationId) { Time = (DateTimeOffset)o.Time };
+            var ord = new Domain.Order(o.Id, o.CustomerId, o.LocationId) { Time = (DateTimeOffset)o.Time, Total = (decimal)o.TotalPrice };
 
             var items = _context.Set<OrderLine>().Where(i => i.OrderId == id).ToList();
             foreach (var i in items)
             {
                 var dbProduct = _context.Set<Product>().Where(p => p.Id == i.ProductId).FirstOrDefault();
-                var domProduct = new Domain.Product(dbProduct.Name, (decimal)dbProduct.Price);
+                var domProduct = new Domain.Product(dbProduct.Id, dbProduct.Name, (decimal)dbProduct.Price);
+
                 ord.SetItemAmount(domProduct, i.Amount);
             }
 
@@ -96,12 +99,12 @@ namespace BookStore.DataAccess
 
             foreach (var o in dbOrders)
             {
-                var n = new Domain.Order(o.Id, o.CustomerId, o.LocationId) { Time = (DateTimeOffset)o.Time };
+                var n = new Domain.Order(o.Id, o.CustomerId, o.LocationId) { Time = (DateTimeOffset)o.Time, Total = (decimal)o.TotalPrice };
                 var lines = _context.Set<OrderLine>().Where(i => i.OrderId == o.Id).ToList();
                 foreach (var i in lines)
                 {
                     var dbProduct = _context.Set<Product>().Where(p => p.Id == i.ProductId).FirstOrDefault();
-                    var domProduct = new Domain.Product(dbProduct.Name, (decimal)dbProduct.Price);
+                    var domProduct = new Domain.Product(dbProduct.Id, dbProduct.Name, (decimal)dbProduct.Price);
                     n.SetItemAmount(domProduct, i.Amount);
                 }
                 toReturn.Add(n);
@@ -125,12 +128,12 @@ namespace BookStore.DataAccess
 
             foreach (var o in dbOrders)
             {
-                var n = new Domain.Order(o.Id, o.CustomerId, o.LocationId) { Time = (DateTimeOffset)o.Time };
+                var n = new Domain.Order(o.Id, o.CustomerId, o.LocationId) { Time = (DateTimeOffset)o.Time, Total = (decimal)o.TotalPrice };
                 var lines = _context.Set<OrderLine>().Where(i => i.OrderId == o.Id).ToList();
                 foreach (var i in lines)
                 {
                     var dbProduct = _context.Set<Product>().Where(p => p.Id == i.ProductId).FirstOrDefault();
-                    var domProduct = new Domain.Product(dbProduct.Name, (decimal)dbProduct.Price);
+                    var domProduct = new Domain.Product(dbProduct.Id, dbProduct.Name, (decimal)dbProduct.Price);
                     n.SetItemAmount(domProduct, i.Amount);
                 }
                 toReturn.Add(n);
@@ -148,12 +151,12 @@ namespace BookStore.DataAccess
             using var logStream = new StreamWriter("bkdb-logs.txt", append: false) { AutoFlush = true };
             using var _context = GenerateDBContext(logStream);
 
-            Order entity = new Order() { CustomerId = o.CustomerID, LocationId = o.LocationID, Time = o.Time.UtcDateTime, TotalPrice = (decimal)o.Total };
+            Order entity = new Order() { CustomerId = o.CustomerID, LocationId = o.LocationID, Time = o.Time.UtcDateTime, TotalPrice = o.Total };
             _context.Set<Order>().Add(entity);
             _context.SaveChanges();
             foreach (var kv in o.Items)
             {
-                OrderLine ol = new OrderLine() { OrderId = entity.Id, ProductId = kv.Key.ID, Amount = kv.Value };
+                OrderLine ol = new OrderLine() { OrderId = entity.Id, ProductId = kv.Key, Amount = kv.Value };
                 _context.Set<OrderLine>().Add(ol);
             }
             _context.SaveChanges();
