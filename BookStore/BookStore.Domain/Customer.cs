@@ -1,4 +1,6 @@
-﻿namespace BookStore.Domain
+﻿using System.Text.Json.Serialization;
+
+namespace BookStore.Domain
 {
     public class Customer
     {
@@ -8,6 +10,7 @@
             LastName = lastName;
         }
 
+        [JsonConstructor]
         public Customer(string firstName, string lastName, int defaultLocationId)
         {
             FirstName = firstName;
