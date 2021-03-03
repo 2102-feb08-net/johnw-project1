@@ -224,8 +224,9 @@ namespace BookStore.Tests
         [Fact]
         public void Order_TestGetTotal()
         {
-            double expected = (double)testProductPrice * 3 * testAmount;
-            double t = o.Total;
+            decimal expected = testProductPrice * testAmount;
+            o.AddItemAmount(p1, testAmount);
+            decimal t = o.Total;
             Assert.Equal(expected, t);
         }
 
