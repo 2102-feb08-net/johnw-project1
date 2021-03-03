@@ -1,9 +1,0 @@
-C:\revature\johnw-project1\BookStore\BookStore.Domain\bin\Debug\netcoreapp3.1\BookStore.Domain.deps.json
-C:\revature\johnw-project1\BookStore\BookStore.Domain\bin\Debug\netcoreapp3.1\BookStore.Domain.dll
-C:\revature\johnw-project1\BookStore\BookStore.Domain\bin\Debug\netcoreapp3.1\BookStore.Domain.pdb
-C:\revature\johnw-project1\BookStore\BookStore.Domain\obj\Debug\netcoreapp3.1\BookStore.Domain.csprojAssemblyReference.cache
-C:\revature\johnw-project1\BookStore\BookStore.Domain\obj\Debug\netcoreapp3.1\BookStore.Domain.AssemblyInfoInputs.cache
-C:\revature\johnw-project1\BookStore\BookStore.Domain\obj\Debug\netcoreapp3.1\BookStore.Domain.AssemblyInfo.cs
-C:\revature\johnw-project1\BookStore\BookStore.Domain\obj\Debug\netcoreapp3.1\BookStore.Domain.csproj.CoreCompileInputs.cache
-C:\revature\johnw-project1\BookStore\BookStore.Domain\obj\Debug\netcoreapp3.1\BookStore.Domain.dll
-C:\revature\johnw-project1\BookStore\BookStore.Domain\obj\Debug\netcoreapp3.1\BookStore.Domain.pdb
