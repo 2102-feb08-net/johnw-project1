@@ -16,7 +16,7 @@ steps:
 - script: dotnet build BookStore/ --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
-- script: dotnet test
+- script: dotnet test BookStore/BookStore.Tests/
   displayName: 'Unit Testing'
 
 - task: AzureRmWebAppDeployment@4
