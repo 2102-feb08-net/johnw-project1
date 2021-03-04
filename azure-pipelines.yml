@@ -19,13 +19,6 @@ steps:
 - script: dotnet test BookStore/BookStore.Tests/
   displayName: 'Unit Testing'
 
-- task: DownloadBuildArtifacts@0
-  inputs:
-    buildType: 'current'
-    downloadType: 'single'
-    artifactName: 'drop'
-    downloadPath: '$(System.DefaultWorkingDirectory)'
-
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
