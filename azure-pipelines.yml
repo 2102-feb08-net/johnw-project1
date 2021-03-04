@@ -15,3 +15,10 @@ variables:
 steps:
 - script: dotnet build BookStore/ --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(d451f1cb-20dd-4a94-8f6a-fae5e3a63a1b)'
+    appType: 'webApp'
+    WebAppName: 'johnw-project1'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
