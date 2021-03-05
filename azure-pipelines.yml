@@ -52,7 +52,7 @@ steps:
   displayName: Publish
   inputs:
     command: 'publish'
-    publishWebProjects: false
+    publishWebProjects: true
     projects: 'BookStore/BookStore.Web'
     zipAfterPublish: true
 
