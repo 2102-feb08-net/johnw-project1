@@ -13,8 +13,25 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: SonarCloudPrepare@1
+  displayName: Sonar Prepare Analysis
+  inputs:
+    SonarCloud: 'sonarcloud-jpw'
+    organization: '2102-feb08-net'
+    scannerMode: 'MSBuild'
+    projectKey: '2102-feb08-net_johnw-project1'
+    projectName: 'BookStore'
+
 - script: dotnet build BookStore/ --configuration $(buildConfiguration)
   displayName: 'Build'
+
+- task: SonarCloudAnalyze@1
+  displayName: Sonar Run Analysis
+
+- task: SonarCloudPublish@1
+  displayName: Sonar Publish Quality Gate
+  inputs:
+    pollingTimeoutSec: '300'
 
 - script: dotnet test BookStore/BookStore.Tests/
   displayName: 'Unit Testing'
