@@ -32,7 +32,7 @@ namespace BookStore.Web
         {
             string connectionString = Configuration["ConnectionStrings:BookStoreDB"];
 
-            services.AddDbContext<bookstoredbContext>(options =>
+            services.AddDbContext<BookStoreDbContext>(options =>
             {
                 options.UseSqlServer(connectionString);
             }, ServiceLifetime.Transient);

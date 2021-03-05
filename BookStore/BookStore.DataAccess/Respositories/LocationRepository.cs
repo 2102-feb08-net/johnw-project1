@@ -11,8 +11,8 @@ namespace BookStore.DataAccess
 {
     public class LocationRepository : ILocationRepository
     {
-        private readonly bookstoredbContext _context;
-        public LocationRepository(bookstoredbContext context)
+        private readonly BookStoreDbContext _context;
+        public LocationRepository(BookStoreDbContext context)
         {
             _context = context;
         }

@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace BookStore.DataAccess
 {
-    public partial class bookstoredbContext : DbContext
+    public partial class BookStoreDbContext : DbContext
     {
-        public bookstoredbContext()
+        public BookStoreDbContext()
         {
         }
 
-        public bookstoredbContext(DbContextOptions<bookstoredbContext> options)
+        public BookStoreDbContext(DbContextOptions<BookStoreDbContext> options)
             : base(options)
         {
         }

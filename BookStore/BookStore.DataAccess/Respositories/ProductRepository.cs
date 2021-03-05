@@ -11,8 +11,8 @@ namespace BookStore.DataAccess
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly bookstoredbContext _context;
-        public ProductRepository(bookstoredbContext context)
+        private readonly BookStoreDbContext _context;
+        public ProductRepository(BookStoreDbContext context)
         {
             _context = context;
         }

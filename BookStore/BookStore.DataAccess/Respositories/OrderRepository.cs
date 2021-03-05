@@ -11,8 +11,8 @@ namespace BookStore.DataAccess
 {
     public class OrderRepository : IOrderRepository
     {
-        private readonly bookstoredbContext _context;
-        public OrderRepository(bookstoredbContext context)
+        private readonly BookStoreDbContext _context;
+        public OrderRepository(BookStoreDbContext context)
         {
             _context = context;
         }
