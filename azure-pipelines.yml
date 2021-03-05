@@ -21,6 +21,7 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: '2102-feb08-net_johnw-project1'
     projectName: 'BookStore'
+    extraProperties: 'sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/*/coverage.opencover.xml'
 
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: dotnet build
@@ -40,6 +41,12 @@ steps:
   displayName: Sonar Publish Quality Gate
   inputs:
     pollingTimeoutSec: '300'
+
+- task: PublishCodeCoverageResults@1
+  displayName: publish code coverage report
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Agent.TempDirectory)/*/coverage.cobertura.xml'
 
 - task: DotNetCoreCLI@2
   displayName: Publish
