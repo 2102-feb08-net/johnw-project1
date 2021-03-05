@@ -22,6 +22,49 @@
         </nav>
  
     </div>
+
+    <form>
+
+        <div class="row gy-2 gx-4 justify-content-center input-form align-items-center">
+            <label style="padding-top: 5px; padding-right: 10px;">Add New Customer</label>
+            <div class="col-auto">
+                <input type="text" class="form-control" id="customer-firstName" placeholder="First Name">
+            </div>
+            <div class="col-auto">
+                <input type="text" class="form-control" id="customer-lastName" placeholder="Last Name">
+            </div>
+            <div class="col-auto">
+                <select class="form-select select-box" id="defaultLocId">
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row justify-content-center gy-4">
+        <div class="col-sm-6 card">
+            <table class="table table-striped" id="customer-list-table" hidden>
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Default Location</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+              </table>
+        </div>
+        
+    </div>
+    <script src="scripts/index.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
