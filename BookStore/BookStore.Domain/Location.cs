@@ -6,19 +6,19 @@ namespace BookStore.Domain
     {
         public Location()
         {
-            Inventory = new Dictionary<int, int>();
+            Inventory = new Dictionary<Product, int>();
         }
 
         public Location(int id)
         {
-            Inventory = new Dictionary<int, int>();
+            Inventory = new Dictionary<Product, int>();
             ID = id;
         }
 
         public Location(string name)
         {
             Name = name;
-            Inventory = new Dictionary<int, int>();
+            Inventory = new Dictionary<Product, int>();
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace BookStore.Domain
         /// <summary>
         /// The inventory of products at the Location, where the key is the Product and the value is the amount of that Product in stock.
         /// </summary>
-        public Dictionary<int, int> Inventory { get; set; }
+        public Dictionary<Product, int> Inventory { get; set; }
 
         /// <summary>
         /// Sets the amount of a Product in the inventory based on the given Product object.
@@ -49,7 +49,7 @@ namespace BookStore.Domain
                 return false;
             }
             
-            Inventory[p.ID] = amount;
+            Inventory[p] = amount;
             return true;
         }
 
@@ -66,7 +66,22 @@ namespace BookStore.Domain
                 return false;
             }
 
-            Inventory[productID] = amount;
+            Product p = null;
+            foreach(var kv in Inventory)
+            {
+                if(kv.Key.ID == productID)
+                {
+                    p = kv.Key;
+                    break;
+                }
+            }
+
+            if (p == null)
+            {
+                return false;
+            }
+
+            Inventory[p] = amount;
             return true;
         }
 
@@ -77,11 +92,11 @@ namespace BookStore.Domain
         /// <returns> int </returns>
         public int GetProductAmount(Product p)
         {
-            if (p == null || !Inventory.ContainsKey(p.ID)) 
+            if (p == null || !Inventory.ContainsKey(p)) 
             {
                 return -1;
             }
-            return Inventory[p.ID];
+            return Inventory[p];
         }
 
         /// <summary>
@@ -91,12 +106,26 @@ namespace BookStore.Domain
         /// <returns> int </returns>
         public int GetProductAmount(int productID)
         {
-            if (productID < 1 || !Inventory.ContainsKey(productID))
+            if (productID < 1)
             {
                 return -1;
             }
-            
-            return Inventory[productID];
+
+            Product p = null;
+            foreach (var kv in Inventory)
+            {
+                if (kv.Key.ID == productID)
+                {
+                    p = kv.Key;
+                    break;
+                }
+            }
+
+            if(p == null)
+            {
+                return -1;
+            }
+            return Inventory[p];
         }
 
         /// <summary>
@@ -107,13 +136,13 @@ namespace BookStore.Domain
         /// <returns> bool indicating success or failure </returns>
         public bool WithdrawProduct(Product p, int amount)
         {
-            if (p == null || amount < 1 || amount > Inventory[p.ID])
+            if (p == null || amount < 1 || amount > Inventory[p])
             {
                 return false;
             }
             else
             {
-                Inventory[p.ID] -= amount;
+                Inventory[p] -= amount;
                 return true;
             }
         }
@@ -126,9 +155,22 @@ namespace BookStore.Domain
         /// <returns> bool indicating success or failure </returns>
         public bool WithdrawProduct(int productID, int amount)
         {
-            if (productID >= 1 && amount >= 1 && Inventory.ContainsKey(productID) && amount <= Inventory[productID])
+            if (productID >= 1 && amount >= 1)
             {
-                Inventory[productID] -= amount;
+                Product p = null;
+                foreach (var kv in Inventory)
+                {
+                    if (kv.Key.ID == productID)
+                    {
+                        p = kv.Key;
+                        break;
+                    }
+                }
+                if(p == null || !Inventory.ContainsKey(p) || amount > Inventory[p])
+                {
+                    return false;
+                }
+                Inventory[p] -= amount;
                 return true;
             }
 
@@ -142,11 +184,11 @@ namespace BookStore.Domain
         /// <returns> bool indicating success or failure </returns>
         public bool RemoveProduct(Product p)
         {
-            if (p == null)
+            if (p == null || !Inventory.ContainsKey(p))
             {
                 return false;
             }
-            return Inventory.Remove(p.ID);
+            return Inventory.Remove(p);
         }
 
         /// <summary>
@@ -155,8 +197,21 @@ namespace BookStore.Domain
         /// <param name="productID"></param>
         /// <returns> bool indicating success or failure </returns>
         public bool RemoveProduct(int productID)
-        {   
-            return Inventory.Remove(productID);
+        {
+            Product p = null;
+            foreach (var kv in Inventory)
+            {
+                if (kv.Key.ID == productID)
+                {
+                    p = kv.Key;
+                    break;
+                }
+            }
+            if (p == null)
+            {
+                return false;
+            }
+            return Inventory.Remove(p);
         }
     }
 }
