@@ -5,14 +5,11 @@ using System.Threading.Tasks;
 
 namespace BookStore.Web.Models
 {
-    public class Location
+    public class InventoryProduct
     {
-        public Location()
-        {
-            Inventory = new List<InventoryProduct>();
-        }
         public int ID { get; set; }
         public string Name { get; set; }
-        public List<InventoryProduct> Inventory { get; set; }
+        public decimal Price { get; set; }
+        public int Amount { get; set; }
     }
 }

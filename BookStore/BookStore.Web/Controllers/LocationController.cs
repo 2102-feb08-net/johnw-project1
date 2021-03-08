@@ -20,27 +20,76 @@ namespace BookStore.Web.Controllers
         }
 
         [HttpGet("api/locations")]
-        public IEnumerable<Domain.Location> GetAllLocations()
+        public IActionResult GetAllLocations()
         {
-            return _repo.GetAllLocations();
+            List<Models.Location> toReturn = new();
+            var locations = _repo.GetAllLocations();
+            foreach(var loc in locations)
+            {
+                Models.Location l = new();
+                l.ID = loc.ID;
+                l.Name = loc.Name;
+                foreach(var kv in loc.Inventory)
+                {
+                    Models.InventoryProduct ip = new();
+                    ip.ID = kv.Key.ID;
+                    ip.Name = kv.Key.Name;
+                    ip.Price = kv.Key.Price;
+                    ip.Amount = kv.Value;
+                    l.Inventory.Add(ip);
+                }
+                toReturn.Add(l);
+            }
+            return Ok(toReturn);
         }
 
         [HttpGet("api/locations/{id?}")]
-        public Domain.Location GetLocationByID(int id)
+        public IActionResult GetLocationByID(int id)
         {
-            return _repo.GetLocationByID(id);
+            var loc = _repo.GetLocationByID(id);
+
+            Models.Location l = new();
+            l.ID = loc.ID;
+            l.Name = loc.Name;
+            foreach(var kv in loc.Inventory)
+            {
+                Models.InventoryProduct ip = new();
+                ip.ID = kv.Key.ID;
+                ip.Name = kv.Key.Name;
+                ip.Price = kv.Key.Price;
+                ip.Amount = kv.Value;
+                l.Inventory.Add(ip);
+            }
+
+            return Ok(l);
         }
 
         [HttpPost("api/locations")]
-        public void AddLocation(Domain.Location l)
+        public void AddLocation(Models.Location l)
         {
-            _repo.AddLocation(l);
+            Domain.Location loc = new();
+            loc.ID = l.ID;
+            loc.Name = l.Name;
+            foreach(var ip in l.Inventory)
+            {
+                Domain.Product p = new(ip.ID, ip.Name, ip.Price);
+                loc.SetProductAmount(p, ip.Amount);
+            }
+            _repo.AddLocation(loc);
         }
 
         [HttpPut("api/locations")]
-        public void UpdateLocation(Domain.Location l)
+        public void UpdateLocation(Models.Location l)
         {
-            _repo.UpdateLocation(l);
+            Domain.Location loc = new();
+            loc.ID = l.ID;
+            loc.Name = l.Name;
+            foreach (var ip in l.Inventory)
+            {
+                Domain.Product p = new(ip.ID, ip.Name, ip.Price);
+                loc.SetProductAmount(p, ip.Amount);
+            }
+            _repo.UpdateLocation(loc);
         }
     }
 }

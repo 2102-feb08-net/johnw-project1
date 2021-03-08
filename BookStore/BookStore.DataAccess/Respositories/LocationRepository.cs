@@ -107,9 +107,9 @@ namespace BookStore.DataAccess
                 entity.Name = l.Name;
                 _context.Entry(entity).State = EntityState.Modified;
 
-                foreach (KeyValuePair<int, int> kv in l.Inventory)
+                foreach (KeyValuePair<Domain.Product, int> kv in l.Inventory)
                 {
-                    var i = _context.Find<Inventory>(l.ID, kv.Key);
+                    var i = _context.Find<Inventory>(l.ID, kv.Key.ID);
                     if (i.Amount != kv.Value)
                     {
                         i.Amount = kv.Value;

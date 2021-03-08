@@ -24,7 +24,7 @@ namespace BookStore.Domain
         /// <summary>
         /// An identifier for the Location.
         /// </summary>
-        public int ID {get;}
+        public int ID { get; set; }
 
         /// <summary>
         /// The name of the Location.
