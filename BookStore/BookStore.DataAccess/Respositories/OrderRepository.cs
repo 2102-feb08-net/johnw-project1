@@ -29,7 +29,7 @@ namespace BookStore.DataAccess
 
             foreach (var o in dbOrders)
             {
-                var n = new Domain.Order(o.Id, o.CustomerId, o.LocationId) { Time = (DateTimeOffset)o.Time, Total = (decimal)o.TotalPrice };
+                var n = new Domain.Order(o.Id, o.CustomerId, o.LocationId) { Time = (DateTimeOffset)o.Time };
 
                 var lines = _context.Set<OrderLine>().Where(i => i.OrderId == o.Id).ToList();
                 foreach (var i in lines)
@@ -53,7 +53,7 @@ namespace BookStore.DataAccess
         public Domain.Order GetOrderByID(int id)
         {
             var o = _context.Set<Order>().Find(id);
-            var ord = new Domain.Order(o.Id, o.CustomerId, o.LocationId) { Time = (DateTimeOffset)o.Time, Total = (decimal)o.TotalPrice };
+            var ord = new Domain.Order(o.Id, o.CustomerId, o.LocationId) { Time = (DateTimeOffset)o.Time };
 
             var items = _context.Set<OrderLine>().Where(i => i.OrderId == id).ToList();
             foreach (var i in items)
@@ -79,7 +79,7 @@ namespace BookStore.DataAccess
 
             foreach (var o in dbOrders)
             {
-                var n = new Domain.Order(o.Id, o.CustomerId, o.LocationId) { Time = (DateTimeOffset)o.Time, Total = (decimal)o.TotalPrice };
+                var n = new Domain.Order(o.Id, o.CustomerId, o.LocationId) { Time = (DateTimeOffset)o.Time };
                 var lines = _context.Set<OrderLine>().Where(i => i.OrderId == o.Id).ToList();
                 foreach (var i in lines)
                 {
@@ -105,7 +105,7 @@ namespace BookStore.DataAccess
 
             foreach (var o in dbOrders)
             {
-                var n = new Domain.Order(o.Id, o.CustomerId, o.LocationId) { Time = (DateTimeOffset)o.Time, Total = (decimal)o.TotalPrice };
+                var n = new Domain.Order(o.Id, o.CustomerId, o.LocationId) { Time = (DateTimeOffset)o.Time };
                 var lines = _context.Set<OrderLine>().Where(i => i.OrderId == o.Id).ToList();
                 foreach (var i in lines)
                 {
@@ -130,7 +130,7 @@ namespace BookStore.DataAccess
             _context.SaveChanges();
             foreach (var kv in o.Items)
             {
-                OrderLine ol = new OrderLine() { OrderId = entity.Id, ProductId = kv.Key, Amount = kv.Value };
+                OrderLine ol = new OrderLine() { OrderId = entity.Id, ProductId = kv.Key.ID, Amount = kv.Value };
                 _context.Set<OrderLine>().Add(ol);
             }
             _context.SaveChanges();

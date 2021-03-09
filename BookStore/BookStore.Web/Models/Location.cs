@@ -9,7 +9,7 @@ namespace BookStore.Web.Models
     {
         public Location()
         {
-            Inventory = new List<InventoryProduct>();
+            Inventory = new();
         }
         public int ID { get; set; }
         public string Name { get; set; }

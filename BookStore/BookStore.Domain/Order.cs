@@ -7,14 +7,14 @@ namespace BookStore.Domain
     {
         public Order()
         {
-            Items = new Dictionary<int, int>();
+            Items = new Dictionary<Product, int>();
         }
 
         public Order(int customerID, int locationID)
         {
             CustomerID = customerID;
             LocationID = locationID;
-            Items = new Dictionary<int, int>();
+            Items = new Dictionary<Product, int>();
         }
 
         public Order(int id, int customerID, int locationID)
@@ -22,13 +22,13 @@ namespace BookStore.Domain
             ID = id;
             CustomerID = customerID;
             LocationID = locationID;
-            Items = new Dictionary<int, int>();
+            Items = new Dictionary<Product, int>();
         }
 
         /// <summary>
         /// An identifier for the Order.
         /// </summary>
-        public int ID {get;}
+        public int ID { get; set; }
 
         /// <summary>
         /// An identifier for the Customer who placed the Order.
@@ -43,12 +43,21 @@ namespace BookStore.Domain
         /// <summary>
         /// The mapping of products in the Order, where the key is the Product and the value is the amount of that Product that was ordered.
         /// </summary>
-        public Dictionary<int, int> Items { get; set; }
+        public Dictionary<Product, int> Items { get; set; }
 
         /// <summary>
         /// The total price of the Order based on the items that were ordered.
         /// </summary>
-        public decimal Total { get; set; }
+        public decimal Total { get
+            {
+                decimal t = 0.0M;
+                foreach (var kv in Items)
+                {
+                    t += kv.Key.Price * kv.Value;
+                }
+                return t;
+            }
+        }
 
         /// <summary>
         /// The date and time that the Order was placed.
@@ -67,7 +76,7 @@ namespace BookStore.Domain
             {
                 return false;
             }
-            Items[p.ID] = amount;
+            Items[p] = amount;
             return true;
         }
 
@@ -79,40 +88,30 @@ namespace BookStore.Domain
         /// <returns> bool indicating success or failure </returns>
         public bool SetItemAmount(int productID, int amount)
         {
-            if (productID < 1 || amount < 0) 
-            {
-                return false;
-            }
-            Items[productID] = amount;
-            return true;
-        }
-
-        public bool AddItemAmount(Product p, int amount)
-        {
-            if (p == null || amount < 1)
-            {
-                return false;
-            }
-            if (!Items.ContainsKey(p.ID))
-            {
-                Items.Add(p.ID, 0);
-            }
-            Items[p.ID] += amount;
-            Total += (amount * p.Price);
-            return true;
-        }
-
-        public bool SubtractItemAmount(Product p, int amount)
-        {
-            if (p == null || amount < 1 || !Items.ContainsKey(p.ID))
+            if (productID < 1 || amount < 0)
             {
                 return false;
             }
 
-            Items[p.ID] -= amount;
-            Total -= (amount * p.Price);
+            Product p = null;
+            foreach (var kv in Items)
+            {
+                if (kv.Key.ID == productID)
+                {
+                    p = kv.Key;
+                    break;
+                }
+            }
+
+            if (p == null)
+            {
+                return false;
+            }
+
+            Items[p] = amount;
             return true;
         }
+
 
         /// <summary>
         /// Returns the amount of the given Product that was ordered
@@ -121,11 +120,11 @@ namespace BookStore.Domain
         /// <returns> int </returns>
         public int GetItemAmount(Product p)
         {
-            if (p == null || !Items.ContainsKey(p.ID)) 
+            if (p == null || !Items.ContainsKey(p)) 
             {
                 return -1;
             }
-            return Items[p.ID];
+            return Items[p];
         }
 
         /// <summary>
@@ -135,11 +134,26 @@ namespace BookStore.Domain
         /// <returns> int </returns>
         public int GetItemAmount(int productID)
         {
-            if (productID < 1 || !Items.ContainsKey(productID))
+            if (productID < 1)
             {
                 return -1;
             }
-            return Items[productID];
+
+            Product p = null;
+            foreach (var kv in Items)
+            {
+                if (kv.Key.ID == productID)
+                {
+                    p = kv.Key;
+                    break;
+                }
+            }
+
+            if (p == null)
+            {
+                return -1;
+            }
+            return Items[p];
         }
 
         /// <summary>
@@ -149,11 +163,11 @@ namespace BookStore.Domain
         /// <returns> bool indicating success or failure </returns>
         public bool RemoveItem(Product p)
         {
-            if (p == null || !Items.ContainsKey(p.ID))
+            if (p == null || !Items.ContainsKey(p))
             {
                 return false;
             }
-            return Items.Remove(p.ID);
+            return Items.Remove(p);
         }
 
         /// <summary>
@@ -163,11 +177,20 @@ namespace BookStore.Domain
         /// <returns> bool indicating success or failure </returns>
         public bool RemoveItem(int productID)
         {
-            if (productID < 1 || !Items.ContainsKey(productID))
+            Product p = null;
+            foreach (var kv in Items)
+            {
+                if (kv.Key.ID == productID)
+                {
+                    p = kv.Key;
+                    break;
+                }
+            }
+            if (p == null)
             {
                 return false;
             }
-            return Items.Remove(productID);
+            return Items.Remove(p);
         }
     }
 }

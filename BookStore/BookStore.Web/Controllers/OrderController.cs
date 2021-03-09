@@ -20,39 +20,156 @@ namespace BookStore.Web.Controllers
         }
 
         [HttpGet("api/orders")]
-        public IEnumerable<Domain.Order> GetAllOrders()
+        public IActionResult GetAllOrders()
         {
-            return _repo.GetAllOrders();
+            List<Models.Order> toReturn = new();
+            var orders = _repo.GetAllOrders();
+            foreach(var order in orders)
+            {
+                Models.Order o = new();
+                o.ID = order.ID;
+                o.CustomerID = order.CustomerID;
+                o.LocationID = order.LocationID;
+                o.Time = order.Time;
+                o.Total = order.Total;
+                foreach(var kv in order.Items)
+                {
+                    Models.InventoryProduct ip = new();
+                    ip.ID = kv.Key.ID;
+                    ip.Name = kv.Key.Name;
+                    ip.Price = kv.Key.Price;
+                    ip.Amount = kv.Value;
+                    o.Items.Add(ip);
+                }
+                toReturn.Add(o);
+            }
+            return Ok(toReturn);
         }
 
         [HttpGet("api/orders/{id?}")]
-        public Domain.Order GetOrderByID(int id)
+        public IActionResult GetOrderByID(int id)
         {
-            return _repo.GetOrderByID(id);
+            var order = _repo.GetOrderByID(id);
+
+            Models.Order o = new();
+            o.ID = order.ID;
+            o.CustomerID = order.CustomerID;
+            o.LocationID = order.LocationID;
+            o.Time = order.Time;
+            o.Total = order.Total;
+            foreach (var kv in order.Items)
+            {
+                Models.InventoryProduct ip = new();
+                ip.ID = kv.Key.ID;
+                ip.Name = kv.Key.Name;
+                ip.Price = kv.Key.Price;
+                ip.Amount = kv.Value;
+                o.Items.Add(ip);
+            }
+
+            return Ok(o);
         }
 
         [HttpPost("api/orders")]
-        public void AddOrder(Domain.Order o)
+        public IActionResult AddOrder(Models.Order o)
         {
-            _repo.AddOrder(o);
+            if(o == null)
+            {
+                return BadRequest();
+            }
+
+            Domain.Order order = new();
+            order.ID = o.ID;
+            order.CustomerID = o.CustomerID;
+            order.LocationID = o.LocationID;
+            order.Time = o.Time;
+            foreach(var ip in o.Items)
+            {
+                Domain.Product p = new(ip.ID, ip.Name, ip.Price);
+                order.SetItemAmount(p, ip.Amount);
+            }
+            
+            _repo.AddOrder(order);
+            
+            return Ok();
         }
 
         [HttpPut("api/orders")]
-        public void UpdateOrder(Domain.Order o)
+        public IActionResult UpdateOrder(Models.Order o)
         {
-            _repo.UpdateOrder(o);
+            if (o == null)
+            {
+                return BadRequest();
+            }
+
+            Domain.Order order = new();
+            order.ID = o.ID;
+            order.CustomerID = o.CustomerID;
+            order.LocationID = o.LocationID;
+            order.Time = o.Time;
+            foreach (var ip in o.Items)
+            {
+                Domain.Product p = new(ip.ID, ip.Name, ip.Price);
+                order.SetItemAmount(p, ip.Amount);
+            }
+            
+            _repo.UpdateOrder(order);
+
+            return Ok();
         }
 
         [HttpGet("api/locations/{id?}/orders")]
-        public IEnumerable<Domain.Order> GetOrdersByLocationID(int id)
+        public IActionResult GetOrdersByLocationID(int id)
         {
-            return _repo.GetOrdersByLocationID(id);
+            List<Models.Order> toReturn = new();
+            var orders = _repo.GetOrdersByLocationID(id);
+            foreach (var order in orders)
+            {
+                Models.Order o = new();
+                o.ID = order.ID;
+                o.CustomerID = order.CustomerID;
+                o.LocationID = order.LocationID;
+                o.Time = order.Time;
+                o.Total = order.Total;
+                foreach (var kv in order.Items)
+                {
+                    Models.InventoryProduct ip = new();
+                    ip.ID = kv.Key.ID;
+                    ip.Name = kv.Key.Name;
+                    ip.Price = kv.Key.Price;
+                    ip.Amount = kv.Value;
+                    o.Items.Add(ip);
+                }
+                toReturn.Add(o);
+            }
+            return Ok(toReturn);
         }
 
         [HttpGet("api/customers/{id?}/orders")]
-        public IEnumerable<Domain.Order> GetOrdersByCustomerID(int id)
+        public IActionResult GetOrdersByCustomerID(int id)
         {
-            return _repo.GetOrdersByCustomerID(id);
+            List<Models.Order> toReturn = new();
+            var orders = _repo.GetOrdersByCustomerID(id);
+            foreach (var order in orders)
+            {
+                Models.Order o = new();
+                o.ID = order.ID;
+                o.CustomerID = order.CustomerID;
+                o.LocationID = order.LocationID;
+                o.Time = order.Time;
+                o.Total = order.Total;
+                foreach (var kv in order.Items)
+                {
+                    Models.InventoryProduct ip = new();
+                    ip.ID = kv.Key.ID;
+                    ip.Name = kv.Key.Name;
+                    ip.Price = kv.Key.Price;
+                    ip.Amount = kv.Value;
+                    o.Items.Add(ip);
+                }
+                toReturn.Add(o);
+            }
+            return Ok(toReturn);
         }
     }
 }
