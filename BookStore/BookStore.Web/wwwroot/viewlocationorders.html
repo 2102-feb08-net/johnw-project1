@@ -14,46 +14,34 @@
             <a class="navbar-brand" href="./index.html">Book Store</a>
             <div class="collapse navbar-collapse">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="./customers.html">Customers<span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="./customers.html">Customers</a>
                     <a class="nav-item nav-link" href="./placeorder.html">Place Order</a>
                     <a class="nav-item nav-link" href="./viewcustomerorders.html">Customer Order History</a>
-                    <a class="nav-item nav-link" href="./viewlocationorders.html">Location Order History</a>
+                    <a class="nav-item nav-link active" href="./viewlocationorders.html">Location Order History<span class="sr-only">(current)</span></a>
                 </div>
             </div>
         </nav>
- 
     </div>
 
     <form>
-
         <div class="row gy-2 gx-4 justify-content-center input-form align-items-center">
-            <label style="padding-top: 5px; padding-right: 10px;">Add New Customer</label>
+            <label style="padding-top: 5px; padding-right: 10px;">Select A Location</label>
             <div class="col-auto">
-                <input type="text" class="form-control" id="customer-firstName" placeholder="First Name *">
-            </div>
-            <div class="col-auto">
-                <input type="text" class="form-control" id="customer-lastName" placeholder="Last Name *">
-            </div>
-            <div class="col-auto">
-                <select class="form-select select-box" id="defaultLocId">
-                    <option value="" selected>Choose a location</option>
+                <select class="form-select select-box" id="view-location" onchange="selectedLocation(event)">
+                    <option value="" selected>--choose from the list--</option>
                 </select>
-            </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-primary" id="addCustomer">Submit</button>
             </div>
         </div>
     </form>
-
-    <div class="row justify-content-center gy-4">
-        <div class="col-sm-4 card" id="table-card" hidden>
-            <table class="table table-striped" id="customer-list-table" hidden aria-label="List of all customers">
+    <div class="row justify-content-around" hidden id="order-info">
+        <div class="col-sm-4 card" id="order-card">
+            <table class="table" id="order-list-table" aria-label="List of orders placed at this location">
                 <thead>
                   <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Default Location ID</th>
+                    <th scope="col" class="center-table-data">ID</th>
+                    <th scope="col" class="center-table-data">Customer</th>
+                    <th scope="col" class="center-table-data">Total</th>
+                    <th scope="col" class="center-table-data">Timestamp</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -61,9 +49,23 @@
                 </tbody>
               </table>
         </div>
-        
+        <div class="col-sm-6 card" id="order-details-card">
+            <table class="table" id="order-detail-table" aria-label="Displays the details of an order">
+                <thead>
+                  <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col" class="center-table-data">Price</th>
+                    <th scope="col" class="center-table-data">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+              </table>
+        </div>
     </div>
-    <script src="scripts/customer.js"></script>
+    <script src="scripts/viewlocationorders.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

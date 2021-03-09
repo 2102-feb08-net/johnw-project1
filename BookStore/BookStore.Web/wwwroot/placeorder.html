@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="eng">
 <head>
     <meta charset="utf-8" />
@@ -15,14 +15,46 @@
             <div class="collapse navbar-collapse">
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" href="./customers.html">Customers</a>
-                    <a class="nav-item nav-link" href="./placeorder.html">Place Order</a>
+                    <a class="nav-item nav-link active" href="./placeorder.html">Place Order<span class="sr-only">(current)</span></a>
                     <a class="nav-item nav-link" href="./viewcustomerorders.html">Customer Order History</a>
                     <a class="nav-item nav-link" href="./viewlocationorders.html">Location Order History</a>
                 </div>
             </div>
         </nav>
- 
     </div>
+    <div class="row gy-2 gx-4 justify-content-center input-form align-items-center">
+        <div class="col-auto">
+            <select class="form-select select-box" id="order-customer" onchange="selectedCustomer(event)">
+                <option value="" selected>Choose a customer</option>
+            </select>
+        </div>
+    
+        <div class="col-auto">
+            <select class="form-select select-box" id="order-location" onchange="selectedLocation(event)">
+                <option value="" selected>Choose a location</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="inventory" class="row justify-content-center gy-4" hidden>
+        <div class="col-sm-6 card" id="inventory-card">
+            <table class="table" id="product-list-table" hidden aria-label="List of products at the selected location">
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col" class="center-table-data">Amount In Stock</th>
+                    <th scope="col" class="center-table-data">Order Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+              </table>
+        </div>
+    </div>
+    
+    <script src="scripts/placeorder.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

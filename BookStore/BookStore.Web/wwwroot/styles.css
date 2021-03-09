@@ -23,3 +23,7 @@
     border: 1px solid #ced4da;
     border-radius: .25rem;
 }
+
+.center-table-data {
+    text-align: center;
+}
