@@ -93,7 +93,6 @@ function submitOrder(event) {
 
     items = [{}];
     for (i = 0; i < inventoryTable.rows.length-1; i++) {
-        console.log(document.getElementsByClassName("productAmount")[i].value);
         let productID = document.getElementsByClassName("productID")[i].innerHTML;
         let productName = document.getElementsByClassName("productName")[i].innerHTML;
         let productPrice = document.getElementsByClassName("productPrice")[i].innerHTML;
@@ -108,7 +107,6 @@ function submitOrder(event) {
 
         items.push(p);
     }
-    console.log(items);
     removeUnorderedItems(items);
 }
 
@@ -118,11 +116,12 @@ function removeUnorderedItems(items) {
 }
 
 function buildAndSendOrder(items) {
-    console.log(items);
     let total = 0.0;
-    items.forEach(i => {
+    for(let j = 0; j < items.length; j++) {
+        i = items[j];
         total += i.price * i.amount;
-    });
+        updateLocationInventory(i);
+    }
     let o = {
         "id": undefined,
         "customerID": orderCustomer.id,
@@ -143,7 +142,28 @@ function buildAndSendOrder(items) {
             throw new Error(`failed to submit order (${resp.status})`);
         }
 
-        alert("Order submitted!");
-        window.location.reload();
+        fetch("/api/locations", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(orderLocation)
+        }).then(resp => {
+            if(!resp.ok) {
+                throw new Error(`failed to update the location (${resp.status})`);
+            }
+
+            alert("Order submitted!");
+            window.location.reload();
+        })
     });
+}
+
+function updateLocationInventory(item) {
+    for (let i = 0; i < orderLocation.inventory.length; i++) {
+        if (parseInt(item.id) === orderLocation.inventory[i].id) {
+            orderLocation.inventory[i].amount -= item.amount;
+            break;
+        }
+    }
 }
