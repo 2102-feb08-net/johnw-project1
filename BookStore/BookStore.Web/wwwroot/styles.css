@@ -27,3 +27,7 @@
 .center-table-data {
     text-align: center;
 }
+
+.hover {
+    cursor: pointer;
+}
