@@ -48,19 +48,21 @@ loadCustomerData().then(customers => {
 
 function selectedCustomer(event) {
     let selectedID = parseInt(event.target.value);
-    customerList.forEach(element => {
-        if (element.id == selectedID) {
-            orderCustomer = element;
+    for(let i = 0; i < customerList.length; i++) {
+        if (customerList[i].id === selectedID) {
+            orderCustomer = customerList[i];
+            break;
         }
-    });
+    }
 }
 
 const inventory = document.getElementById("inventory");
 const inventoryTable = document.getElementById("product-list-table");
 function selectedLocation(event) {
     let selectedID = parseInt(event.target.value);
-    locations.forEach(loc => {
-        if (loc.id == selectedID) {
+    for(let i = 0; i < locations.length; i++) {
+        let loc = locations[i];
+        if (loc.id === selectedID) {
             orderLocation = loc;
             
             let tableHeaderRowCount = 1;
@@ -72,13 +74,76 @@ function selectedLocation(event) {
             for(const p of orderLocation.inventory) {
                 const row = inventoryTable.insertRow();
                 row.innerHTML = `
-                <td>${p.name}</td>
-                <td>${p.price.toFixed(2)}</td>
+                <td class="productID">${p.id}</td>
+                <td class="productName">${p.name}</td>
+                <td class="productPrice">${p.price.toFixed(2)}</td>
                 <td class="center-table-data">${p.amount}</td>
-                <td class="center-table-data">0</td>`;
+                <td class="center-table-data">
+                    <input class="productAmount" type="number" placeholder="0">
+                </td>`;
             }
             inventory.hidden = false;
             inventoryTable.hidden = false;
         }
+    };
+}
+
+function submitOrder(event) {
+    event.preventDefault();
+
+    items = [{}];
+    for (i = 0; i < inventoryTable.rows.length-1; i++) {
+        console.log(document.getElementsByClassName("productAmount")[i].value);
+        let productID = document.getElementsByClassName("productID")[i].innerHTML;
+        let productName = document.getElementsByClassName("productName")[i].innerHTML;
+        let productPrice = document.getElementsByClassName("productPrice")[i].innerHTML;
+        let productAmount = document.getElementsByClassName("productAmount")[i].value;
+
+        let p = {
+            "id": productID,
+            "name": productName,
+            "price": productPrice,
+            "amount": productAmount
+        }
+
+        items.push(p);
+    }
+    console.log(items);
+    removeUnorderedItems(items);
+}
+
+function removeUnorderedItems(items) {
+    items = items.filter(i => (i.amount > 0) && (i.amount != undefined));
+    buildAndSendOrder(items);
+}
+
+function buildAndSendOrder(items) {
+    console.log(items);
+    let total = 0.0;
+    items.forEach(i => {
+        total += i.price * i.amount;
+    });
+    let o = {
+        "id": undefined,
+        "customerID": orderCustomer.id,
+        "locationID": orderLocation.id,
+        "time": new Date().toJSON(),
+        "items": items,
+        "total": total
+    }
+
+    fetch("/api/orders", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(o)
+    }).then(resp => {
+        if(!resp.ok) {
+            throw new Error(`failed to submit order (${resp.status})`);
+        }
+
+        alert("Order submitted!");
+        window.location.reload();
     });
 }

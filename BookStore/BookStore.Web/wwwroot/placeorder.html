@@ -34,6 +34,10 @@
                 <option value="" selected>Choose a location</option>
             </select>
         </div>
+
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary" id="submitOrder" onclick="submitOrder(event)">Submit Order</button>
+        </div>
     </div>
 
     <div id="inventory" class="row justify-content-center gy-4" hidden>
@@ -41,6 +45,7 @@
             <table class="table" id="product-list-table" hidden aria-label="List of products at the selected location">
                 <thead>
                   <tr>
+                    <th scope="col">ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Price</th>
                     <th scope="col" class="center-table-data">Amount In Stock</th>
