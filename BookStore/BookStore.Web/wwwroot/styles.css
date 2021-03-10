@@ -32,8 +32,8 @@
     cursor: pointer;
 }
 
-.title {
-    font-weight: 600;
+#navbar {
+    font-weight: 300;
     text-decoration: underline;
-    text-shadow: #ced4da;
+    text-shadow: #212529 5px;
 }
