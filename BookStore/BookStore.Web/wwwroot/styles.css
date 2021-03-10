@@ -31,3 +31,9 @@
 .hover {
     cursor: pointer;
 }
+
+.title {
+    font-weight: 600;
+    text-decoration: underline;
+    text-shadow: #ced4da;
+}
