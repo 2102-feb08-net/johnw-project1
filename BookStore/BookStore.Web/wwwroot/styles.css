@@ -31,3 +31,9 @@
 .hover {
     cursor: pointer;
 }
+
+#navbar {
+    font-weight: 300;
+    text-decoration: underline;
+    text-shadow: #212529 5px;
+}
